@@ -10,7 +10,7 @@ Ensure that Fullstory is already loaded in the head of your app. Then simply imp
 ```js
 import createPlugin from 'vuex-fullstory-plugin';
 
-const fullstoryPlugin = createPlugin(window.FS);
+const fullstoryPlugin = createPlugin();
 
 const store = new Vuex.Store({
   // ...
@@ -23,11 +23,11 @@ If you'd like to scrub sensitive data from mutations, or prevent some types of m
 The sanitizer function should take mutation and return a new object to log. If the sanitizer returns null, the mutation will not be logged.
 
 ```js
-const fullstoryPlugin = createPlugin(window.FS, function(mutation) {
+const fullstoryPlugin = createPlugin(function(mutation) {
   if (mutation.type === 'SET_SECRET_TOKEN') {
     return null;
   }
-  
+
   return mutation;
 })
 ```

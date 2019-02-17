@@ -1,10 +1,16 @@
-export default function createPlugin(fullstory, sanitizer = (action => action)) {
+function hasFullstory() {
+  return !!(window.FS && window.FS.log);
+}
+
+export default function createPlugin(sanitizer = (action => action)) {
   return store => {
     store.subscribe(mutation => {
-      const sanitized = sanitizer(mutation);
+      if (hasFullstory()) {
+        const sanitized = sanitizer(mutation);
 
-      if (sanitized) {
-        fullstory.log('mutation', sanitized);
+        if (sanitized) {
+          window.FS.log('mutation', sanitized);
+        }
       }
     });
   };
